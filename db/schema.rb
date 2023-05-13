@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_13_160751) do
+ActiveRecord::Schema.define(version: 2023_05_18_184333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "blogs", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_blogs_on_user_id"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -31,6 +38,8 @@ ActiveRecord::Schema.define(version: 2023_05_13_160751) do
     t.string "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "blog_id", null: false
+    t.index ["blog_id"], name: "index_posts_on_blog_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -46,19 +55,17 @@ ActiveRecord::Schema.define(version: 2023_05_13_160751) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.string "name"
+    t.string "email"
     t.integer "role"
+    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "blogs", "users"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "posts", "blogs"
   add_foreign_key "posts", "users"
 end

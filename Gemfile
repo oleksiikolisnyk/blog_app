@@ -6,8 +6,10 @@ ruby '2.7.6'
 gem 'rails', '~> 6.0.0'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
-gem 'graphql', '~> 2.0'
-gem 'devise', '~> 4.9'
+gem 'graphql', '~> 1.9'
+gem 'bcrypt', '~> 3.1.13'
+gem 'graphql-pagination', '~> 1.1'
+gem 'kaminari-activerecord'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
