@@ -13,7 +13,7 @@ module Mutations
       tags = Tag.where(id: tag_ids)
       # current_user - works with FE
       # here  can we check user role
-      # if user.writer?
+      # if current_user.writer?
         Post.create(
           user: current_user,
           blog_id: blog_id,
