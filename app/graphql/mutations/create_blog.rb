@@ -8,12 +8,10 @@ module Mutations
     type Types::BlogType
 
     def resolve(title: nil, description: nil)
-      # user = context[:current_user] - works with FE
-      user = User.first
-      # here  can we check user role
-      # if user.writer?
+      # here  can we check user role and create error if he has not permissions
+      # if current_user.writer?
         Blog.create(
-          user: user,
+          user: current_user,
           title: title,
           description: description
         )

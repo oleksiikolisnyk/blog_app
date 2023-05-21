@@ -8,12 +8,10 @@ module Mutations
     type Types::CommentType
 
     def resolve(post_id: nil, body: nil)
-      # user = context[:current_user] - works with FE
-      user = User.first # hardcoded user, but with FE this line can be removed
-      # here  can we check user role
-      # if user.reader?
+      # here  can we check user role and handler for errors
+      # if current_user.reader?
         Comment.create(
-          user: user,
+          user: current_user,
           post_id: post_id,
           body: body
         )

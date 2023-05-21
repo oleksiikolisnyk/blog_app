@@ -12,14 +12,13 @@ module Mutations
     field :errors, [String]
 
     def resolve(id:, title:, body:, tag_ids:, comment_body:)
-      user = context[:current_user]
       post = Post.find(id)
-      if post.user.id == user.id
+      if post.user.id == current_user.id
         tags = Tag.where(id: tag_ids)
-        comment = Comment.create(post: post, user: user, body: comment_body)
+        comment = Comment.create(post: post, user: current_user, body: comment_body)
 
-        post.comments << comment
-        post.tags << tags
+        post.comments << comment if !comment.nil?
+        post.tags << tags if !tags.nil?
         if post.update(title: title, body: body)
           {
             post: post,

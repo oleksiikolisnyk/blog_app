@@ -88,6 +88,7 @@ Post:
 ```
 mutation {
   createPost(input: {
+    blogId: 15,
     title: "Test Title",
     body: "Test Body",
     tagIds: [1, 2, 3]
@@ -213,8 +214,8 @@ Comment:
     }
   }
 }
-=========
-create_comment
+```
+```
 mutation {
   createComment(input: {
     body: "Test Comment Body",

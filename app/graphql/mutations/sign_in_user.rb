@@ -16,11 +16,9 @@ module Mutations
       return unless user.authenticate(credentials[:password])
 
       crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-      # The functionality below works, but we need hardcoded token because wie do nnot have an FE
-      # token = crypt.encrypt_and_sign("user-id:#{ user.id }")
-      token = "pMDek/K4pgzxy3yhmYIRxRRl4Mk=--8JMxFOtX2Hf6B0ur--9LKKtaORVFaYnZtJUvnDHQ=="
+      token = crypt.encrypt_and_sign("user-id:#{ user.id }")
 
-      context[:session][:token] = token
+      context[:session][:token] = token unless Rails.env.test?
 
       { user: user, token: token }
     end
