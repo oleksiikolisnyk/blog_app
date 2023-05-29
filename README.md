@@ -228,4 +228,5 @@ mutation {
   }
 }
 ```
-6. Everything has been implemented except tests - they will be provided later (will be RSpec), posts filtering by tags has not been completed, for using users' roles and users' tokens we need FE.
+6. To use tests run the command `bundle exec rspec spec`. It will run tests Sign up, Sign in for users and for the blog creation.
+7. The application is in progress and React Appollo FE will bee used.
