@@ -10,6 +10,7 @@ gem 'graphql', '~> 1.9'
 gem 'bcrypt', '~> 3.1.13'
 gem 'graphql-pagination', '~> 1.1'
 gem 'kaminari-activerecord'
+gem 'rack-cors'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
