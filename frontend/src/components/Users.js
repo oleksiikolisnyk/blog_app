@@ -2,7 +2,8 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import UserAvatar from './UserAvatar';
-// import CreateUser from './CreateUser';
+import CreateUser from './CreateUser';
+import SigninUser from './SigninUser';
 
 const GET_USERS = gql`
   {
@@ -21,6 +22,10 @@ function Users ({ selectUser }) {
   if(loading) return 'Data is loading...'
   if(error) return `Error is ${error.message}`
 
+  function updateUsers(cache, { data: { createUser }}) {
+    window.location.reload();
+  }
+
   return(
     <div className="flex flex-wrap items-center pb-16">
       {data.users.map(user => (
@@ -28,6 +33,9 @@ function Users ({ selectUser }) {
           <UserAvatar user={user} />
         </div>
       ))}
+
+      <div><CreateUser onCreateUser={updateUsers} /></div>
+      <div><SigninUser /></div>
     </div>
   )
 }

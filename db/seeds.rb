@@ -1,4 +1,4 @@
-admin = User.create(email: 'bob@the.cat', password: 'tacethbob', role: 1)
+admin = User.create(name: 'bob', email: 'bob@the.cat', password: 'tacethbob', role: 'admin')
 
 tag = Tag.create(title: 'cat')
 

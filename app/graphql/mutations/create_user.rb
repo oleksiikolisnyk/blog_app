@@ -12,13 +12,13 @@ module Mutations
     type Types::UserType
 
     def resolve(name: nil, auth_provider: nil)
-      # here we should add validation by role that only admins can creata users. Like `if current_user.admin?`
-      # it has not been added because in this case it will be diifficult to tetst applicaion without FE
-      User.create!(
-        name: name,
-        email: auth_provider&.[](:credentials)&.[](:email),
-        password: auth_provider&.[](:credentials)&.[](:password)
-      )
+      # if current_user.admin?
+        User.create!(
+          name: name,
+          email: auth_provider&.[](:credentials)&.[](:email),
+          password: auth_provider&.[](:credentials)&.[](:password)
+        )
+      # end
     end
   end
 end

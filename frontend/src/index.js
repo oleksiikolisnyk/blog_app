@@ -4,16 +4,27 @@ import './tailwind.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-const link = createHttpLink({
+
+const httpLink = createHttpLink({
   uri: 'http://localhost:3000/graphql'
 })
 
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+
 const client = new ApolloClient({
-  link: link,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 })
 
