@@ -4,11 +4,11 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # we need to provide session and current user
       session: session,
       current_user: current_user
     }
     result = BlogAppSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+
     render json: result
   rescue => e
     raise e unless Rails.env.development?
@@ -17,17 +17,13 @@ class GraphqlController < ApplicationController
 
   private
 
-  # gets current user from token stored in the session
   def current_user
-    # session[:token] is hardcoded because graphiql does not support it
     return unless session[:token]
-    # session[:token] = "pMDek/K4pgzxy3yhmYIRxRRl4Mk=--8JMxFOtX2Hf6B0ur--9LKKtaORVFaYnZtJUvnDHQ=="
 
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
     token = crypt.decrypt_and_verify session[:token]
     user_id = token.gsub('user-id:', '').to_i
-    # the user is hardcoded until we will have got FE
-    # User.first
+
     User.find(user_id)
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     nil
